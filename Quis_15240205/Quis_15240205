@@ -1,0 +1,67 @@
+nama = 'Fauzan Fadhilah'   
+nim = 15240205
+kelas = '15.1A.01'
+def hitung_total(jumlah_beli, harga_satuan):
+    return jumlah_beli * harga_satuan
+
+def hitung_diskon(sub_total):
+    if sub_total > 500000:
+        return sub_total * 0.1  
+    return 0
+
+def hitung_pajak(sub_total):
+    return sub_total * 0.11  
+
+def hitung_kembali(uang_bayar, total_bayar):
+    return uang_bayar - total_bayar
+buku = {
+    'DP': {'judul': 'DASAR PEMROGRAMAN', 'harga': 150000},
+    'PP': {'judul': 'PYTHON PROGRAMMING', 'harga': 170000},
+    'WP': {'judul': 'WEB PROGRAMMING', 'harga': 200000}
+}
+nama_pembeli = input("Masukan Nama pembeli: ")
+
+beli_lagi = 'Y'
+keranjang = []
+
+while beli_lagi.upper() == 'Y':
+    kode_buku = input("Masukan Kode buku [DP/PP/WP]: ").upper()
+    if kode_buku in buku:
+        jumlah_beli = int(input("Masukan jumlah beli: "))
+        harga_satuan = buku[kode_buku]['harga']
+        total_harga = hitung_total(jumlah_beli, harga_satuan)
+        
+        keranjang.append({
+            'judul': buku[kode_buku]['judul'],
+            'jumlah': jumlah_beli,
+            'harga': harga_satuan,
+            'total': total_harga
+        })
+    else:
+        print("Kode buku tidak valid.")
+    
+    beli_lagi = input("Lanjut Beli (Y/T)? : ")
+
+sub_total = sum(item['total'] for item in keranjang)
+diskon = hitung_diskon(sub_total)
+pajak = hitung_pajak(sub_total)
+total_bayar = sub_total - diskon + pajak
+print("\nNama Pembeli: ", nama_pembeli)
+print("Toko Buku Cerdas Selalu")
+print("="*60)
+print("No | Judul Buku           | Jumlah Beli | Harga      | Total")
+print("="*60)
+for i, item in enumerate(keranjang, 1):
+    print(f"{i}  | {item['judul']} | {item['jumlah']}           | Rp. {item['harga']} | Rp. {item['total']}")
+print("="*60)
+print(f"Sub total       : Rp. {sub_total}")
+print(f"Diskon          : Rp. {diskon}")
+print(f"Pajak           : Rp. {pajak}")
+print(f"Total Bayar     : Rp. {total_bayar}")
+
+uang_bayar = int(input("Uang Bayar      : Rp. "))
+uang_kembali = hitung_kembali(uang_bayar, total_bayar)
+print(f"Uang Kembali    : Rp. {uang_kembali}")
+print(f'Nama            : {nama}')
+print(f'NIM             : {nim}')
+print(f'kelas           : {kelas}')
